@@ -1,3 +1,4 @@
+from businesslogic_lower import *
 
 def add_journal_entry(type_transaction: str, amount: float, category: str, description: str) -> None:
 
