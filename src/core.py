@@ -16,7 +16,47 @@ def main_loop():
     Работа
     :return: 
     """
-    pass
+
+    while True:
+
+        user_input = input(">>")
+
+        if user_input == "info":
+            pass
+
+        elif user_input == "add":
+            pass
+
+        elif user_input == "show":
+            pass
+
+        elif user_input == "del":
+            pass
+
+        elif user_input == "edit":
+            pass
+
+        elif user_input == "find":
+            pass
+
+        elif user_input == "type":
+            pass
+
+        elif user_input == "cat":
+            pass
+
+        elif user_input == "period":
+            pass
+
+        elif user_input == "stats":
+            pass
+
+        elif user_input == "exit":
+            break
+
+        else:
+            show_error_message("Введено некорректное значение. Введите еще раз >>")
+            continue
 
 def stop():
     """
