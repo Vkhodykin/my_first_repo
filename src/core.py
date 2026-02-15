@@ -1,4 +1,4 @@
-from display import show_info_message, show_error_message
+from src.display import show_info_message, show_error_message
 
 
 def start():
@@ -63,5 +63,6 @@ def stop():
     Завершение
     :return:
     """
-    pass
+
+    show_info_message("Работа программы завершена")
 
