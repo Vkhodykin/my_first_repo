@@ -22,3 +22,10 @@ def stop():
     """
     pass
 
+
+def add_journal_entry(type_transaction: str, amount: float, category: str, description: str) -> None:
+    pass
+
+def show_entries():
+    pass
+
