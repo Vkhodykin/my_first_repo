@@ -1,5 +1,6 @@
 from src import display
 from src import constants
+from src import businesslogic_upper as blu
 
 
 def start():
@@ -26,7 +27,21 @@ def main_loop():
             pass
 
         elif user_input == constants.ADD_COMMAND:
-            pass
+
+            type_transaction = input("Тип операции >>")
+            amount = float(input("Сумма >>"))
+            category = input("Категория >>")
+            description = input("Описание >>")
+
+            if blu.try_add_journal_entry(type_transaction, amount, category, description):
+
+                display.show_info_message("Операция записана успешно")
+
+            else:
+                display.show_error_message("Введено некорректное значение. Введите еще раз")
+
+                continue
+
 
         elif user_input == constants.SHOW_COMMAND:
             pass
