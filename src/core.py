@@ -33,14 +33,17 @@ def main_loop():
             amount = input("Введите сумму >> ").strip()
 
             if type_transaction == "income":
-                category = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
+                category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
+
+                description_income = input("Введите описание доходов >> ")
 
             elif type_transaction == "expense":
-                category = input("Введите категорию расходов (Mandatory/Optional/Saving) >> ").strip().lower()
+                category_expense = input("Введите категорию расходов (Mandatory/Optional/Saving) >> ").strip().lower()
 
-            description = input("Описание >>")
+                description_expense = input("Введите описание расходов >> ")
 
-            if blu.try_add_journal_entry(type_transaction, amount, category, description):
+            if blu.try_add_journal_entry(type_transaction, amount, category_income, category_expense, description_income,
+                                         description_expense):
 
                 display.show_info_message("Операция записана успешно")
 
