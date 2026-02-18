@@ -37,15 +37,18 @@ def main_loop():
 
                 description_income = input("Введите описание доходов >> ")
 
+                if blu.try_add_journal_entry_income(type_transaction, amount, category_income, description_income):
+
+                    display.show_info_message("Операция записана успешно")
+
             elif type_transaction == "expense":
                 category_expense = input("Введите категорию расходов (Mandatory/Optional/Saving) >> ").strip().lower()
 
                 description_expense = input("Введите описание расходов >> ")
 
-            if blu.try_add_journal_entry(type_transaction, amount, category_income, category_expense, description_income,
-                                         description_expense):
+                if blu.try_add_journal_entry_expense(type_transaction, amount, category_expense, description_expense):
 
-                display.show_info_message("Операция записана успешно")
+                    display.show_info_message("Операция записана успешно")
 
             else:
                 display.show_error_message("Введено некорректное значение. Введите еще раз")
