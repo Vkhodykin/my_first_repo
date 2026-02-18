@@ -1,5 +1,6 @@
 import itertools
 from typing import Callable
+from src import display
 
 
 def create_id_generator(start=1, prefix='') -> Callable[[], str]:
@@ -29,8 +30,76 @@ def validate_type_transaction(type_transaction) -> bool:
     return True
 
 
-def validate_amount(amount):
-    pass
+def validate_amount(min_value = 0.01, max_value = None, allow_zero = False) -> float | None:
+    """
+    Проверяет сумму, допускает не более 2 знаков после запятой
+        min_value: минимальное значение (по умолчанию 0.01)
+        max_value: максимальное значение (по умолчанию None - без ограничений)
+        allow_zero: разрешать ли ноль (по умолчанию False)
+    """
+
+    global amount
+
+    while True:
+        amount_str = amount.strip()
+
+        # Проверяем формат (целые или с запятой/точкой)
+        if not amount_str.replace(',', '.').replace('.', '').isdigit():
+
+            display.show_error_message("Error! The amount must contain only numbers, a comma, or a period.")
+
+            continue
+
+        # Заменяем запятую на точку
+        normalized = amount_str.replace(',', '.')
+
+        # Проверяем количество знаков после запятой
+        if '.' in normalized:
+
+            parts = normalized.split('.')
+
+            if len(parts) > 2:
+
+                display.show_error_message("Error! The amount can only contain one comma or period")
+
+                continue
+
+            if len(parts[1]) > 2:
+
+                display.show_error_message("Error! The amount may contain no more than 2 decimal places")
+
+                continue
+
+        try:
+            amount = float(normalized)
+
+            # Проверка на ноль
+            if not allow_zero and amount == 0:
+
+                display.show_info_message("The sum cannot be equal to zero!")
+
+                continue
+
+            # Проверка минимального значения
+            if amount < min_value:
+
+                display.show_info_message(f"The amount must be no less than {min_value}!")
+
+                continue
+
+            # Проверка максимального значения
+            if max_value is not None and amount > max_value:
+
+                display.show_info_message(f"The amount should not be more than {max_value}!")
+
+                continue
+
+            # Округляем до 2 знаков для денежных сумм
+            return round(amount, 2)
+
+        except ValueError:
+            display.show_error_message("Error! Incorrect number format.")
+
 
 def validate_category(category):
     pass
