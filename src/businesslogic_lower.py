@@ -25,7 +25,7 @@ def validate_type_transaction(type_transaction) -> bool:
 
     if type_transaction not in ['income', 'expense']:
 
-        ValueError("Type transaction must be Income or Expense")
+        display.show_error_message("Type transaction must be Income or Expense")
 
     return True
 
@@ -99,11 +99,30 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
             display.show_error_message("Error! Incorrect number format")
 
 
-def validate_category(category):
+def validate_category_income(category_income):
+
+    if category_income not in ['regular', 'random']:
+
+        display.show_error_message("The income category must be Regular or Random")
+
+    return True
+
+
+def validate_category_expense(category_expense):
+
+    if category_expense not in ['mandatory', 'optional', 'saving']:
+
+        display.show_error_message("The expense category must be Mandatory or Optional or Saving")
+
+    return True
+
+
+def validate_description_income(description_income):
     pass
 
-def validate_description(description):
+def validate_description_expense(description_expense):
     pass
+
 
 def write_journal_entry(type_transaction, amount, category, description):
     pass
