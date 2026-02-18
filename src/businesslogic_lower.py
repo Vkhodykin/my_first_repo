@@ -20,8 +20,14 @@ def create_id_generator(start=1, prefix='') -> Callable[[], str]:
     return generate
 
 
-def validate_type_transaction(type_transaction):
-    pass
+def validate_type_transaction(type_transaction) -> bool:
+
+    if type_transaction not in ['income', 'expense']:
+
+        ValueError("Type transaction must be Income or Expense")
+
+    return True
+
 
 def validate_amount(amount):
     pass
