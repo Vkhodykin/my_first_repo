@@ -1,7 +1,7 @@
 from src import display
 from src import constants
 from src import businesslogic_upper as blu
-from src.businesslogic_lower import create_id_generator
+from src.businesslogic_lower import create_id_generator, get_current_datetime
 
 
 def start():
@@ -43,7 +43,10 @@ def main_loop():
 
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
 
-                if blu.try_add_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income):
+                get_current_datetime()
+
+                if blu.try_add_journal_entry_income(create_id_generator, type_transaction, amount, category_income,
+                                                    description_income, get_current_datetime):
 
                     display.show_info_message("Операция записана успешно")
 
@@ -54,7 +57,10 @@ def main_loop():
 
                 description_expense = input("Введите описание расходов (не более 255 символов) >> ")
 
-                if blu.try_add_journal_entry_expense(create_id_generator, type_transaction, amount, category_expense, description_expense):
+                get_current_datetime()
+
+                if blu.try_add_journal_entry_expense(create_id_generator, type_transaction, amount, category_expense,
+                                                     description_expense, get_current_datetime):
 
                     display.show_info_message("Операция записана успешно")
 
