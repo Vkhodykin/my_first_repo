@@ -1,7 +1,7 @@
 import itertools
 from typing import Callable
 from src import display
-
+from src import core
 
 def create_id_generator(start=1, prefix='') -> Callable[[], str]:
     """
@@ -30,7 +30,7 @@ def validate_type_transaction(type_transaction) -> bool:
     return True
 
 
-def validate_amount(min_value = 0.01, max_value = None, allow_zero = False) -> float | None:
+def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = False) -> float | None:
     """
     Проверяет сумму, допускает не более 2 знаков после запятой
         min_value: минимальное значение (по умолчанию 0.01)
@@ -38,20 +38,18 @@ def validate_amount(min_value = 0.01, max_value = None, allow_zero = False) -> f
         allow_zero: разрешать ли ноль (по умолчанию False)
     """
 
-    global amount
-
     while True:
-        amount_str = amount.strip()
+        core.amount = amount.strip()
 
         # Проверяем формат (целые или с запятой/точкой)
-        if not amount_str.replace(',', '.').replace('.', '').isdigit():
+        if not amount.replace(',', '.').replace('.', '').isdigit():
 
-            display.show_error_message("Error! The amount must contain only numbers, a comma, or a period.")
+            display.show_error_message("Error! The amount must contain only numbers, a comma, or a period")
 
             continue
 
         # Заменяем запятую на точку
-        normalized = amount_str.replace(',', '.')
+        normalized = amount.replace(',', '.')
 
         # Проверяем количество знаков после запятой
         if '.' in normalized:
@@ -98,7 +96,7 @@ def validate_amount(min_value = 0.01, max_value = None, allow_zero = False) -> f
             return round(amount, 2)
 
         except ValueError:
-            display.show_error_message("Error! Incorrect number format.")
+            display.show_error_message("Error! Incorrect number format")
 
 
 def validate_category(category):

@@ -29,7 +29,7 @@ def main_loop():
         elif user_input == constants.ADD_COMMAND:
 
             type_transaction = input("Тип операции >>")
-            amount = float(input("Сумма >>"))
+            amount = input("Сумма >>")
             category = input("Категория >>")
             description = input("Описание >>")
 
