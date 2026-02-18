@@ -1,7 +1,7 @@
 import itertools
 from typing import Callable
 from src import display
-from src import core
+
 
 
 def create_id_generator(start=1) -> Callable[[], int]:
@@ -39,8 +39,8 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
         allow_zero: разрешать ли ноль (по умолчанию False)
     """
 
+
     while True:
-        core.amount = amount.strip()
 
         # Проверяем формат (целые или с запятой/точкой)
         if not amount.replace(',', '.').replace('.', '').isdigit():
@@ -98,6 +98,9 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
 
         except ValueError:
             display.show_error_message("Error! Incorrect number format")
+
+            continue
+
 
 
 def validate_category_income(category_income):
