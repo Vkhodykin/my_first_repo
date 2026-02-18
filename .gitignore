@@ -1,0 +1,10 @@
+# PyCharm
+.idea/
+.venv/
+
+*.pyc
+*.egg-info
+
+# Environments
+/env
+/.env

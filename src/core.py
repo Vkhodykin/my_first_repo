@@ -28,9 +28,16 @@ def main_loop():
 
         elif user_input == constants.ADD_COMMAND:
 
-            type_transaction = input("Тип операции >>")
-            amount = input("Сумма >>")
-            category = input("Категория >>")
+            type_transaction = input("Введите тип операции (Income/Expense): >> ").strip().lower()
+
+            amount = input("Введите сумму >> ").strip()
+
+            if type_transaction == "income":
+                category = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
+
+            elif type_transaction == "expense":
+                category = input("Введите категорию расходов (Mandatory/Optional/Saving) >> ").strip().lower()
+
             description = input("Описание >>")
 
             if blu.try_add_journal_entry(type_transaction, amount, category, description):
