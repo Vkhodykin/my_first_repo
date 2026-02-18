@@ -124,5 +124,8 @@ def validate_description_expense(description_expense):
     pass
 
 
-def write_journal_entry(type_transaction, amount, category, description):
+def write_journal_entry_income(type_transaction, amount, category, description):
+    pass
+
+def write_journal_entry_expense(type_transaction, amount, category, description):
     pass
