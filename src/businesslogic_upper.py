@@ -1,7 +1,8 @@
 from src import businesslogic_lower as bll
 
 
-def try_add_journal_entry_income(create_id_generator: int, type_transaction: str, amount: str, category_income: str, description_income: str) -> bool:
+def try_add_journal_entry_income(create_id_generator: int, type_transaction: str, amount: str, category_income: str,
+                                 description_income: str, get_current_datetime: str) -> bool:
 
     if not bll.create_id_generator():
         return False
@@ -18,13 +19,17 @@ def try_add_journal_entry_income(create_id_generator: int, type_transaction: str
     if not bll.validate_description_income(description_income):
         return False
 
-    bll.write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income)
+    if not bll.get_current_datetime():
+        return False
+
+    bll.write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income,
+                                   get_current_datetime)
 
     return True
 
 
 def try_add_journal_entry_expense(create_id_generator: int, type_transaction: str, amount: float, category_expense: str,
-                                  description_expense: str) -> bool:
+                                  description_expense: str, get_current_datetime: str) -> bool:
 
     if not bll.create_id_generator():
         return False
@@ -41,7 +46,11 @@ def try_add_journal_entry_expense(create_id_generator: int, type_transaction: st
     if not bll.validate_description_expense(description_expense):
         return False
 
-    bll.write_journal_entry_expense(create_id_generator, type_transaction, amount, category_expense, description_expense)
+    if not bll.get_current_datetime():
+        return False
+
+    bll.write_journal_entry_expense(create_id_generator, type_transaction, amount, category_expense, description_expense,
+                                    get_current_datetime)
 
     return True
 
