@@ -1,8 +1,7 @@
 from src import businesslogic_lower as bll
 
 
-def try_add_journal_entry_income(create_id_generator: str, type_transaction: str, amount: float, category_income: str,
-                          description_income: str) -> bool:
+def try_add_journal_entry_income(create_id_generator: int, type_transaction: str, amount: float, category_income: str, description_income: str) -> bool:
 
     if not bll.create_id_generator():
         return False
@@ -24,7 +23,7 @@ def try_add_journal_entry_income(create_id_generator: str, type_transaction: str
     return True
 
 
-def try_add_journal_entry_expense(create_id_generator: str, type_transaction: str, amount: float, category_expense: str,
+def try_add_journal_entry_expense(create_id_generator: int, type_transaction: str, amount: float, category_expense: str,
                                   description_expense: str) -> bool:
 
     if not bll.create_id_generator():

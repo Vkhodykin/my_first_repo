@@ -1,6 +1,7 @@
 from src import display
 from src import constants
 from src import businesslogic_upper as blu
+from src.businesslogic_lower import create_id_generator
 
 
 def start():
@@ -26,29 +27,37 @@ def main_loop():
         if user_input == constants.INFO_COMMAND:
             pass
 
+
         elif user_input == constants.ADD_COMMAND:
+
+            create_id_generator(1)
 
             type_transaction = input("Введите тип операции (Income/Expense): >> ").strip().lower()
 
             amount = input("Введите сумму >> ").strip()
 
+
             if type_transaction == "income":
+
                 category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
 
-                description_income = input("Введите описание доходов >> ")
+                description_income = input("Введите описание доходов (не более 255 символов) >> ")
 
-                if blu.try_add_journal_entry_income(type_transaction, amount, category_income, description_income):
+                if blu.try_add_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income):
 
                     display.show_info_message("Операция записана успешно")
+
 
             elif type_transaction == "expense":
+
                 category_expense = input("Введите категорию расходов (Mandatory/Optional/Saving) >> ").strip().lower()
 
-                description_expense = input("Введите описание расходов >> ")
+                description_expense = input("Введите описание расходов (не более 255 символов) >> ")
 
-                if blu.try_add_journal_entry_expense(type_transaction, amount, category_expense, description_expense):
+                if blu.try_add_journal_entry_expense(create_id_generator, type_transaction, amount, category_expense, description_expense):
 
                     display.show_info_message("Операция записана успешно")
+
 
             else:
                 display.show_error_message("Введено некорректное значение. Введите еще раз")
