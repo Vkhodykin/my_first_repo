@@ -1,7 +1,8 @@
 import itertools
+from datetime import datetime
 from typing import Callable
 from src import display
-
+from src.constants import DATE_FMT
 
 
 def create_id_generator(start=1) -> Callable[[], int]:
@@ -186,6 +187,11 @@ def validate_description_expense(description_expense):
 
         if valid:
             return description_expense
+
+
+def get_current_datetime() -> str:
+
+    return datetime.now().strftime(DATE_FMT)
 
 
 def write_journal_entry_income(create_id_generator, type_transaction, amount, category, description):
