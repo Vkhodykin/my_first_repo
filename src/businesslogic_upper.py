@@ -22,7 +22,7 @@ def try_add_journal_entry_income(create_id_generator: int, type_transaction: str
     if not bll.get_current_datetime():
         return False
 
-    bll.write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income,
+    bll.try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income,
                                    get_current_datetime)
 
     return True
