@@ -195,7 +195,8 @@ def get_current_datetime() -> str:
     return datetime.now().strftime(DATE_FMT)
 
 
-def formater_journal() -> dict[str, Callable[[], int] | str | Any]:
+def formater_journal(create_id_generator, type_transaction, amount, category_income, description_income,
+                     get_current_datetime) -> dict[str, Callable[[], int] | str | Any]:
 
     entry = {
         "id": create_id_generator(),
@@ -209,7 +210,8 @@ def formater_journal() -> dict[str, Callable[[], int] | str | Any]:
     return entry
 
 
-def try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income, get_current_datetime) -> None:
+def try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income,
+                                   get_current_datetime) -> None:
 
     # Читаем или создаем файл
     try:
