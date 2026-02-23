@@ -1,8 +1,9 @@
 import itertools
+import json
 from datetime import datetime
 from typing import Callable
 from src import display
-from src.constants import DATE_FMT
+from src import constants
 
 
 def create_id_generator(start=1) -> Callable[[], int]:
@@ -194,8 +195,26 @@ def get_current_datetime() -> str:
     return datetime.now().strftime(DATE_FMT)
 
 
-def write_journal_entry_income(create_id_generator, type_transaction, amount, category, description):
-    pass
+def try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income, get_current_datetime) -> None:
 
-def write_journal_entry_expense(create_id_generator, type_transaction, amount, category, description):
+    # Читаем или создаем файл
+    try:
+        with open(constants.PATH, "r", encoding="utf-8") as f:
+
+            data = json.load(f)
+
+    except:
+
+        data = []
+
+    # Добавляем запись
+    data.append(formater_journal())
+
+    # Сохраняем
+    with open(constants.PATH, "w", encoding="utf-8") as f:
+
+        json.dump(data, f, ensure_ascii=False, indent=None, separators=(',', ':'))
+
+
+def write_journal_entry_expense(create_id_generator, type_transaction, amount, category, description, get_current_datetime):
     pass
