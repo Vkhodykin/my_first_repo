@@ -1,7 +1,7 @@
 import itertools
 import json
 from datetime import datetime
-from typing import Callable
+from typing import Callable, Any
 from src import display
 from src import constants
 
@@ -193,6 +193,20 @@ def validate_description_expense(description_expense):
 def get_current_datetime() -> str:
 
     return datetime.now().strftime(DATE_FMT)
+
+
+def formater_journal() -> dict[str, Callable[[], int] | str | Any]:
+
+    entry = {
+        "id": create_id_generator(),
+        "type": type_transaction(),
+        "amount": amount(),
+        "category": category_income(),
+        "description": description_income(),
+        "datetime": get_current_datetime()
+    }
+
+    return entry
 
 
 def try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income, get_current_datetime) -> None:
