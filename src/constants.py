@@ -4,7 +4,7 @@ ERROR_MESSAGE_STYLE = "\x1b[1;31m"
 DEFAULT_MESSAGE_STYLE = "\x1b[0m"
 INFO_MESSAGE_STYLE = "\x1b[1;33m"
 
-PATH = "data/data.txt"
+PATH = "data/journal.json"
 
 INFO_COMMAND = "info"
 ADD_COMMAND = "add"
