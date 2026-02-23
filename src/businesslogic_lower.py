@@ -192,7 +192,7 @@ def validate_description_expense(description_expense):
 
 def get_current_datetime() -> str:
 
-    return datetime.now().strftime(DATE_FMT)
+    return datetime.now().strftime(constants.DATE_FMT)
 
 
 def formater_journal(create_id_generator, type_transaction, amount, category_income, description_income,
