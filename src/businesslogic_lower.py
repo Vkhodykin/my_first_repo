@@ -1,27 +1,42 @@
 import itertools
 import json
+import os
 from datetime import datetime
-from typing import Callable, Any
-from src import display
+from typing import Callable, Any, Generator
+from src import display, core
 from src import constants
 
 
-def create_id_generator(start=1) -> Callable[[], int]:
+def create_id_generator(last_id=0) -> Generator[int, Any, Any]:
     """
     Генератор последовательных ID
     """
 
-    counter = start
+    current_id = last_id
 
-    def generate() -> int:
+    while True:
+        current_id += 1
+        yield current_id
 
-        nonlocal counter
-        current = counter
-        counter += 1
 
-        return current
+def get_last_id_from_json():
+    """
+    Находит максимальный ID в JSON файле.
+    """
 
-    return generate
+    if not os.path.exists(constants.PATH) or os.path.getsize(constants.PATH) == 0:  # Если файла нет или он пустой — начинаем с 0
+        return 0
+
+    try:
+        with open(constants.PATH, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+            if not data:  # Если в файле пустой список []
+                return 0
+            return max(item['id'] for item in data) # Ищем максимальный id среди всех записей
+
+    except (json.JSONDecodeError, KeyError): # Если файл поврежден или нет ключа 'id'
+        return 0
+
 
 
 def validate_type_transaction(type_transaction) -> bool:
@@ -195,15 +210,14 @@ def get_current_datetime() -> str:
     return datetime.now().strftime(constants.DATE_FMT)
 
 
-def formater_journal(create_id_generator, type_transaction, amount, category_income, description_income,
-                     get_current_datetime) -> dict[str, Callable[[], int] | str | Any]:
+def formater_journal() -> dict[str, Callable[[], int] | str | Any]:
 
     entry = {
         "id": create_id_generator(),
-        "type": type_transaction(),
-        "amount": amount(),
-        "category": category_income(),
-        "description": description_income(),
+        "type": core.type_transaction(),
+        "amount": core.amount(),
+        "category": core.category_income(),
+        "description": core.description_income(),
         "datetime": get_current_datetime()
     }
 
