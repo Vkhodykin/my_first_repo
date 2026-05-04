@@ -1,8 +1,11 @@
+import json
+import os
+
 from src import display
 from src import constants
 from src import businesslogic_upper as blu
-from src.businesslogic_lower import create_id_generator, get_current_datetime
-
+from src.businesslogic_lower import get_last_id_from_json
+from src.businesslogic_lower import create_id_generator
 
 def start():
     """
@@ -10,8 +13,18 @@ def start():
     :return: 
     """
 
-    display.show_info_message("Для начала работы выберите что вы хотите сделать. Введите команду:\n 1 - info\n 2 - add\n 3 - show\n 4 - del\n"
-                      "5 - edit\n 6 - find\n 7 - type\n 8 - cat\n 9 - period\n 10 - stats\n 11 - exit")
+    display.show_info_message("Для начала работы выберите что вы хотите сделать. Введите команду:\n "
+                              "1 - info\n "
+                              "2 - add\n "
+                              "3 - show\n "
+                              "4 - del\n"
+                              "5 - edit\n "
+                              "6 - find\n "
+                              "7 - type\n "
+                              "8 - cat\n "
+                              "9 - period\n "
+                              "10 - stats\n "
+                              "11 - exit")
 
 
 def main_loop():
@@ -30,7 +43,8 @@ def main_loop():
 
         elif user_input == constants.ADD_COMMAND:
 
-            create_id_generator(1)
+            last_id = get_last_id_from_json()
+            id_gen = create_id_generator(last_id)
 
             type_transaction = input("Введите тип операции (Income/Expense): >> ").strip().lower()
 
@@ -43,10 +57,8 @@ def main_loop():
 
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
 
-                get_current_datetime()
-
-                if blu.try_add_journal_entry_income(create_id_generator, type_transaction, amount, category_income,
-                                                    description_income, get_current_datetime):
+                if blu.try_add_journal_entry_income(id_gen, type_transaction, amount, category_income,
+                                                    description_income):
 
                     display.show_info_message("Операция записана успешно")
 
@@ -57,9 +69,7 @@ def main_loop():
 
                 description_expense = input("Введите описание расходов (не более 255 символов) >> ")
 
-                get_current_datetime()
-
-                if blu.try_add_journal_entry_expense(create_id_generator, type_transaction, amount, category_expense,
+                if blu.try_add_journal_entry_expense(id_gen, type_transaction, amount, category_expense,
                                                      description_expense, get_current_datetime):
 
                     display.show_info_message("Операция записана успешно")
