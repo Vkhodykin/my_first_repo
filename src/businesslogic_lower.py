@@ -3,49 +3,65 @@ import json
 import os
 from datetime import datetime
 from typing import Callable, Any, Generator
-from src import display, core
-from src import constants
+from src import display, constants
 
 
-def create_id_generator(last_id=0) -> Generator[int, Any, Any]:
+def create_id_generator(id_gen=0) -> Generator[int, Any, Any]:
     """
     Генератор последовательных ID
     """
 
-    current_id = last_id
+    last_id = id_gen
 
     while True:
-        current_id += 1
-        yield current_id
+        last_id += 1
+        yield last_id
 
 
-def get_last_id_from_json():
+def get_last_id_from_json(t_type=None) -> int:
     """
     Находит максимальный ID в JSON файле.
     """
-
-    if not os.path.exists(constants.PATH) or os.path.getsize(constants.PATH) == 0:  # Если файла нет или он пустой — начинаем с 0
+    if not os.path.exists(constants.PATH) or os.path.getsize(constants.PATH) == 0:
         return 0
 
     try:
         with open(constants.PATH, 'r', encoding='utf-8') as f:
             data = json.load(f)
-            if not data:  # Если в файле пустой список []
+            if not data:
                 return 0
-            return max(item['id'] for item in data) # Ищем максимальный id среди всех записей
 
-    except (json.JSONDecodeError, KeyError): # Если файл поврежден или нет ключа 'id'
+            ids = []
+            for day_ops in data.values():
+                for op in day_ops:
+                    if t_type is None:
+                        val = op.get('id')
+                    elif t_type == 'income':
+                        val = op.get('id_income')
+                    elif t_type == 'expense':
+                        val = op.get('id_expense')
+                    else:
+                        val = None
+
+                    if isinstance(val, int):  # Берем только если это число
+                        ids.append(val)
+
+        return max(ids) if ids else 0
+
+    except (json.JSONDecodeError, KeyError):  # Если файл поврежден или нет ключа 'id'
         return 0
 
 
 
-def validate_type_transaction(type_transaction) -> bool:
+
+def validate_type_transaction(type_transaction) -> str:
 
     if type_transaction not in ['income', 'expense']:
 
         display.show_error_message("Type transaction must be Income or Expense")
+        raise ValueError("Invalid transaction type")
 
-    return True
+    return type_transaction
 
 
 def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = False) -> float | None:
@@ -120,13 +136,13 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
 
 
 
-def validate_category_income(category_income):
+def validate_category_income(category_income) -> str:
 
     if category_income not in ['regular', 'random']:
 
         display.show_error_message("The income category must be Regular or Random")
 
-    return True
+    return category_income
 
 
 def validate_category_expense(category_expense):
@@ -135,7 +151,7 @@ def validate_category_expense(category_expense):
 
         display.show_error_message("The expense category must be Mandatory or Optional or Saving")
 
-    return True
+    return category_expense
 
 
 def validate_description_income(description_income):
@@ -206,45 +222,47 @@ def validate_description_expense(description_expense):
 
 
 def get_current_datetime() -> str:
-
     return datetime.now().strftime(constants.DATE_FMT)
 
 
-def formater_journal() -> dict[str, Callable[[], int] | str | Any]:
-
+def try_write_journal_entry_income(gen_total, gen_income, type_transaction, amount, category_income, description_income, date) -> bool:
+    # 1. Создаем запись
     entry = {
-        "id": create_id_generator(),
-        "type": core.type_transaction(),
-        "amount": core.amount(),
-        "category": core.category_income(),
-        "description": core.description_income(),
-        "datetime": get_current_datetime()
+        "id": next(gen_total),
+        "id_income": next(gen_income), # Это функция для доходов, просто берем следующий ID дохода
+        "id_expense": None,            # Для доходов поле расхода всегда пустое
+        "type": validate_type_transaction(type_transaction),
+        "amount": validate_amount(amount),
+        "category": validate_category_income(category_income),
+        "description": validate_description_income(description_income),
+        "datetime": date
     }
 
-    return entry
+    # 2. Читаем текущий файл
+    data = {}
+    if os.path.exists(constants.PATH) and os.path.getsize(constants.PATH) > 0:
+        try:
+            with open(constants.PATH, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+        except json.JSONDecodeError:
+            data = {}
 
+    # 3. Определяем ключ даты для группировки (первые 10 символов: YYYY-MM-DD)
+    date_key = date[:10]
 
-def try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income,
-                                   get_current_datetime) -> None:
+    # 4. Добавляем запись в нужную дату
+    if date_key not in data:
+        data[date_key] = []
+    data[date_key].append(entry)
 
-    # Читаем или создаем файл
+    # 5. Сохраняем обратно в файл
     try:
-        with open(constants.PATH, "r", encoding="utf-8") as f:
-
-            data = json.load(f)
-
-    except:
-
-        data = []
-
-    # Добавляем запись
-    data.append(formater_journal())
-
-    # Сохраняем
-    with open(constants.PATH, "w", encoding="utf-8") as f:
-
-        json.dump(data, f, ensure_ascii=False, indent=None, separators=(',', ':'))
+        with open(constants.PATH, 'w', encoding='utf-8') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+        return True # Подтверждение успешной записи
+    except Exception:
+        return False
 
 
-def write_journal_entry_expense(create_id_generator, type_transaction, amount, category, description, get_current_datetime):
+def write_journal_entry_expense(last_id, type_transaction, amount, category, description, date):
     pass
