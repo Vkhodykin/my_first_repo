@@ -1,8 +1,14 @@
 from src import businesslogic_lower as bll
 
 
-def try_add_journal_entry_income(create_id_generator: int, type_transaction: str, amount: str, category_income: str,
+def try_add_journal_entry_income(create_id_generator: int, get_last_id_from_json: int, type_transaction: str, amount: str, category_income: str,
                                  description_income: str, get_current_datetime: str) -> bool:
+
+    if not bll.create_id_generator():
+        return False
+
+    if not bll.get_last_id_from_json():
+        return False
 
     if not bll.create_id_generator():
         return False
@@ -22,8 +28,7 @@ def try_add_journal_entry_income(create_id_generator: int, type_transaction: str
     if not bll.get_current_datetime():
         return False
 
-    bll.try_write_journal_entry_income(create_id_generator, type_transaction, amount, category_income, description_income,
-                                   get_current_datetime)
+    bll.try_write_journal_entry_income(create_id_generator, get_last_id_from_json, type_transaction, amount, category_income, description_income, get_current_datetime)
 
     return True
 
