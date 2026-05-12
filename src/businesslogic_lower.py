@@ -156,37 +156,35 @@ def validate_category_expense(category_expense):
 
 def validate_description_income(description_income):
 
-    while True:
-
     # Проверка длины
-        if len(description_income) > 255:
+    if len(description_income) > 255:
 
-            display.show_error_message(f"Error! Text too long ({len(description_income)} > 255)")
+        display.show_error_message(f"Error! Text too long ({len(description_income)} > 255)")
 
-            continue
+        return False
 
     # Проверка на пустоту
-        if not description_income.strip():
+    if not description_income.strip():
 
-            display.show_error_message("Text cannot be empty!")
+        display.show_error_message("Text cannot be empty!")
 
-            continue
+        return False
 
     # Проверка символов
-        valid = True
+    valid = True
 
-        for char in description_income:
+    for char in description_income:
 
-            if not (char.isalpha() or char.isdigit() or char.isspace()):
+        if not (char.isalpha() or char.isdigit() or char.isspace()):
 
-                display.show_error_message(f"Error! Invalid character: '{char}'")
+            display.show_error_message(f"Error! Invalid character: '{char}'")
 
-                valid = False
+            valid = False
 
-                break
+            break
 
-        if valid:
-            return description_income
+    if valid:
+        return True
 
 
 def validate_description_expense(description_expense):
