@@ -154,7 +154,7 @@ def validate_category_expense(category_expense):
     return category_expense
 
 
-def validate_description(description_type, type_name="Text"):
+def validate_description(description_type: str, type_name="Text") -> bool:
 
     # Проверка длины
     if len(description_type) > 255:
@@ -166,7 +166,7 @@ def validate_description(description_type, type_name="Text"):
     # Проверка на пустоту
     if not description_type.strip():
 
-        display.show_error_message("Text cannot be empty!")
+        display.show_error_message(f"Error!{type_name} cannot be empty!")
 
         return False
 
