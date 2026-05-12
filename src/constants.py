@@ -19,3 +19,8 @@ STATS_COMMAND = "stats"
 EXIT_COMMAND = "exit"
 
 DATE_FMT = "%Y-%m-%d %H:%M:%S"
+
+CATEGORIES = {
+    'income': ['regular', 'random'],
+    'expense': ['mandatory', 'optional', 'saving']
+}
