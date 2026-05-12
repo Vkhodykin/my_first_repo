@@ -154,69 +154,32 @@ def validate_category_expense(category_expense):
     return category_expense
 
 
-def validate_description_income(description_income):
+def validate_description(description_type, type_name="Text"):
 
     # Проверка длины
-    if len(description_income) > 255:
+    if len(description_type) > 255:
 
-        display.show_error_message(f"Error! Text too long ({len(description_income)} > 255)")
+        display.show_error_message(f"Error! Text too long ({len(description_type)} > 255)")
 
         return False
 
     # Проверка на пустоту
-    if not description_income.strip():
+    if not description_type.strip():
 
         display.show_error_message("Text cannot be empty!")
 
         return False
 
     # Проверка символов
-    valid = True
+    for char in description_type:
 
-    for char in description_income:
-
-        if not (char.isalpha() or char.isdigit() or char.isspace()):
+        if not (char.isalpha() or char.isdigit() or char.isspace() or char in ".,-"):
 
             display.show_error_message(f"Error! Invalid character: '{char}'")
 
-            valid = False
+            return False
 
-            break
-
-    if valid:
-        return True
-
-
-def validate_description_expense(description_expense):
-
-    while True:
-
-        # Проверка длины
-        if len(description_expense) > 255:
-            display.show_error_message(f"Error! Text too long ({len(description_expense)} > 255)")
-
-            continue
-
-        # Проверка на пустоту
-        if not description_expense.strip():
-            display.show_error_message("Text cannot be empty!")
-
-            continue
-
-        # Проверка символов
-        valid = True
-
-        for char in description_expense:
-
-            if not (char.isalpha() or char.isdigit() or char.isspace()):
-                display.show_error_message(f"Error! Invalid character: '{char}'")
-
-                valid = False
-
-                break
-
-        if valid:
-            return description_expense
+    return True
 
 
 def get_current_datetime() -> str:
