@@ -64,7 +64,7 @@ def validate_type_transaction(type_transaction) -> str:
     return type_transaction
 
 
-def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = False) -> float | None:
+def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = False) -> bool:
     """
     Проверяет сумму, допускает не более 2 знаков после запятой
         min_value: минимальное значение (по умолчанию 0.01)
@@ -72,67 +72,65 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
         allow_zero: разрешать ли ноль (по умолчанию False)
     """
 
+    # Проверяем формат (целые или с запятой/точкой)
+    if not amount.replace(',', '.').replace('.', '').isdigit():
 
-    while True:
+        display.show_error_message("Error! The amount must contain only numbers, a comma, or a period")
 
-        # Проверяем формат (целые или с запятой/точкой)
-        if not amount.replace(',', '.').replace('.', '').isdigit():
+        return False
 
-            display.show_error_message("Error! The amount must contain only numbers, a comma, or a period")
 
-            continue
+    # Заменяем запятую на точку
+    normalized = amount.replace(',', '.')
 
-        # Заменяем запятую на точку
-        normalized = amount.replace(',', '.')
+    # Проверяем количество знаков после запятой
+    if '.' in normalized:
 
-        # Проверяем количество знаков после запятой
-        if '.' in normalized:
+        parts = normalized.split('.')
 
-            parts = normalized.split('.')
+        if len(parts) > 2:
 
-            if len(parts) > 2:
+            display.show_error_message("Error! The amount can only contain one comma or period")
 
-                display.show_error_message("Error! The amount can only contain one comma or period")
+            return False
 
-                continue
+        if len(parts[1]) > 2:
 
-            if len(parts[1]) > 2:
+            display.show_error_message("Error! The amount may contain no more than 2 decimal places")
 
-                display.show_error_message("Error! The amount may contain no more than 2 decimal places")
+            return False
 
-                continue
+    try:
+        amount = float(normalized)
 
-        try:
-            amount = float(normalized)
+        # Проверка на ноль
+        if not allow_zero and amount == 0:
 
-            # Проверка на ноль
-            if not allow_zero and amount == 0:
+            display.show_info_message("The sum cannot be equal to zero!")
 
-                display.show_info_message("The sum cannot be equal to zero!")
+            return False
 
-                continue
+        # Проверка минимального значения
+        if amount < min_value:
 
-            # Проверка минимального значения
-            if amount < min_value:
+            display.show_info_message(f"The amount must be no less than {min_value}!")
 
-                display.show_info_message(f"The amount must be no less than {min_value}!")
+            return False
 
-                continue
+        # Проверка максимального значения
+        if max_value is not None and amount > max_value:
 
-            # Проверка максимального значения
-            if max_value is not None and amount > max_value:
+            display.show_info_message(f"The amount should not be more than {max_value}!")
 
-                display.show_info_message(f"The amount should not be more than {max_value}!")
+            return False
 
-                continue
+        # Округляем до 2 знаков для денежных сумм
+        return round(amount, 2)
 
-            # Округляем до 2 знаков для денежных сумм
-            return round(amount, 2)
+    except ValueError:
+        display.show_error_message("Error! Incorrect number format")
 
-        except ValueError:
-            display.show_error_message("Error! Incorrect number format")
-
-            continue
+        return False
 
 
 
