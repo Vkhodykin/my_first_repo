@@ -136,22 +136,18 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
 
 
 
-def validate_category_income(category_income) -> str:
+def validate_category(category_input: str, category_type: str) -> bool:
 
-    if category_income not in ['regular', 'random']:
+    allowed = constants.CATEGORIES.get(category_type, [])
 
-        display.show_error_message("The income category must be Regular or Random")
+    if category_input.strip().lower() in allowed:
+        return True
 
-    return category_income
+    allowed_str = ", ".join(allowed).capitalize()
 
+    display.show_error_message(f"Error! The {category_type} category must be: {allowed_str}")
 
-def validate_category_expense(category_expense):
-
-    if category_expense not in ['mandatory', 'optional', 'saving']:
-
-        display.show_error_message("The expense category must be Mandatory or Optional or Saving")
-
-    return category_expense
+    return False
 
 
 def validate_description(description_type: str, type_name="Text") -> bool:
