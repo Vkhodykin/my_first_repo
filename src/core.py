@@ -75,6 +75,10 @@ def main_loop():
                             break
 
 
+                    income_description = True
+                    while income_description:
+
+
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
 
                 if blu.try_add_journal_entry_income(gen_total, gen_income, type_transaction, amount, category_income,
