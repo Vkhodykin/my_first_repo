@@ -69,9 +69,9 @@ def main_loop():
                     while income_category:
                         
                         display.show_info_message("Введите категорию доходов (Regular/Random):")
+                        category_input = input(">> ")
 
 
-                category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
 
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
 
