@@ -9,3 +9,5 @@ def show_info_message(message) -> None:
 def show_notification_message(message) -> None:
     print(f"{NOTIFICATION_MESSAGE_STYLE}{message}{DEFAULT_MESSAGE_STYLE}...")
     
+def show_confirmation_message(message) -> None:
+    print(f"{CONFIRMATION_MESSAGE_STYLE}{message}{DEFAULT_MESSAGE_STYLE}...")
