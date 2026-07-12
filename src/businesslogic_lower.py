@@ -128,9 +128,6 @@ def validate_description(description_type: str, type_name="Text") -> bool:
     return True
 
 
-def get_current_datetime() -> str:
-    return datetime.now().strftime(constants.DATE_FMT)
-
 
 def try_write_journal_entry_income(gen_total, gen_income, type_transaction, amount, category_income, description_income, date) -> bool:
     # 1. Создаем запись
