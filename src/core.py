@@ -99,7 +99,12 @@ def main_loop():
                         display.show_confirmation_message("Хотите продолжить запись данных? (y/n)")
                         confirmed = su.confirm(">> ")
                         
-                        
+                        if confirmed:
+                            # продолжить
+                            continue
+                        else:
+                            # отменить
+                            break
                         
 
             elif type_transaction == "expense":
