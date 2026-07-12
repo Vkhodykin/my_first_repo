@@ -52,10 +52,14 @@ def main_loop():
                 if not blu.validate_type_transaction(input_type_transaction):
                     continue
 
-            amount = input("Введите сумму >> ").strip()
+
+                if input_type_transaction == "income":
+
+                    income_transaction = True
+                    while income_transaction:
 
 
-            if type_transaction == "income":
+
 
                 category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
 
