@@ -43,7 +43,7 @@ def main_loop():
                 gen_income = su.create_id_generator(su.get_last_id_from_json(transaction_type='income'))
                 gen_expense = su.create_id_generator(su.get_last_id_from_json(transaction_type='expense'))
 
-            date = get_current_datetime()
+                date = su.get_current_datetime()
 
 #
             type_transaction = input("Введите тип операции (Income/Expense): >> ").strip().lower()
