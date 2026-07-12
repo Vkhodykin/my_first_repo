@@ -36,6 +36,9 @@ def main_loop():
 
         elif user_input == constants.ADD_COMMAND:
 
+            create_a_new_entry = True
+            while create_a_new_entry:
+
 
             gen_total = create_id_generator(get_last_id_from_json(t_type=None))
             gen_income = create_id_generator(get_last_id_from_json(t_type='income'))
