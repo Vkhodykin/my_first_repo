@@ -1,5 +1,6 @@
 import json
 import os
+from datetime import datetime
 from typing import Callable, Any, Generator
 
 
@@ -59,3 +60,11 @@ def get_last_id_from_json(transaction_type=None) -> int:
 
     except (json.JSONDecodeError, KeyError):  # Если файл поврежден или нет ключа 'id'
         return 0
+
+
+def get_current_datetime() -> str:
+    """
+    Возвращает текущее время в формате yyyy-mm-dd hh:mm:ss
+    """
+
+    return datetime.now().strftime(constants.DATE_FMT)
