@@ -108,6 +108,8 @@ def main_loop():
 
                     display.show_info_message("Операция записана успешно")
 
+                    display.show_confirmation_message("Хотите продолжить запись данных? (y/n)")
+
 
             else:
                 display.show_error_message("Введено некорректное значение. Введите еще раз")
