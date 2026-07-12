@@ -47,7 +47,7 @@ def main_loop():
 
 
                 display.show_info_message("Введите тип операции (Income/Expense):")
-            type_transaction = input("Введите тип операции (Income/Expense): >> ").strip().lower()
+                input_type_transaction = input(">> ")
 
             amount = input("Введите сумму >> ").strip()
 
