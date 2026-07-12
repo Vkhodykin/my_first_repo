@@ -6,18 +6,6 @@ from typing import Callable, Any, Generator
 from src import display, constants
 
 
-def create_id_generator(id_gen=0) -> Generator[int, Any, Any]:
-    """
-    Генератор последовательных ID
-    """
-
-    last_id = id_gen
-
-    while True:
-        last_id += 1
-        yield last_id
-
-
 def get_last_id_from_json(t_type=None) -> int:
     """
     Находит максимальный ID в JSON файле.
