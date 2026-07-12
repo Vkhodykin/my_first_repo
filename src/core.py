@@ -109,6 +109,7 @@ def main_loop():
 
                     else:
                         display.show_error_message("Ошибка при записи операции")
+                        display.show_info_message("Операция не записана")
 
 
 
