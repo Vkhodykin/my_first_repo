@@ -67,8 +67,8 @@ def main_loop():
 
                     income_category = True
                     while income_category:
-
                         
+                        display.show_info_message("Введите категорию доходов (Regular/Random):")
 
 
                 category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
