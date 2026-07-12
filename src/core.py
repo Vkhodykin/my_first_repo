@@ -45,7 +45,8 @@ def main_loop():
 
                 date = su.get_current_datetime()
 
-#
+
+                display.show_info_message("Введите тип операции (Income/Expense):")
             type_transaction = input("Введите тип операции (Income/Expense): >> ").strip().lower()
 
             amount = input("Введите сумму >> ").strip()
