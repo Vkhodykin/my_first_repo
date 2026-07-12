@@ -30,7 +30,8 @@ def main_loop():
         user_input = input(">> ")
 
         if user_input == constants.INFO_COMMAND:
-            pass
+
+            display.show_notification_message(help.PROGRAM_INFO)
 
 
         elif user_input == constants.ADD_COMMAND:
