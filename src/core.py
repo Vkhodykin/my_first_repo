@@ -94,8 +94,13 @@ def main_loop():
                                                                        date)
 
                     if write_operation:
-                        display.show_info_message("Операция записана успешно")
+                        display.show_notification_message("Операция записана успешно")
 
+                        display.show_confirmation_message("Хотите продолжить запись данных? (y/n)")
+                        confirmed = su.confirm(">> ")
+                        
+                        
+                        
 
             elif type_transaction == "expense":
 
@@ -107,8 +112,6 @@ def main_loop():
                                                      description_expense, date):
 
                     display.show_info_message("Операция записана успешно")
-
-                    display.show_confirmation_message("Хотите продолжить запись данных? (y/n)")
 
 
             else:
