@@ -3,36 +3,24 @@ import os
 
 from src import display
 from src import constants
+from src import help
 from src import businesslogic_upper as blu
-from src.businesslogic_lower import create_id_generator, get_last_id_from_json, get_current_datetime
+from src import support_utils as su
 
 
 def start():
     """
     Запуск
-    :return: 
+    :return:
     """
 
-
-
-    display.show_info_message("Для начала работы выберите что вы хотите сделать. Введите команду:\n "
-                              "1 - info\n "
-                              "2 - add\n "
-                              "3 - show\n "
-                              "4 - del\n"
-                              "5 - edit\n "
-                              "6 - find\n "
-                              "7 - type\n "
-                              "8 - cat\n "
-                              "9 - period\n "
-                              "10 - stats\n "
-                              "11 - exit")
+    display.show_notification_message(help.COMMANDS_HELP)
 
 
 def main_loop():
     """
     Работа
-    :return: 
+    :return:
     """
 
     while True:
