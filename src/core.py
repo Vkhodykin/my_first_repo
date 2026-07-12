@@ -93,10 +93,8 @@ def main_loop():
                                                                        description_type,
                                                                        date)
 
-                if blu.try_add_journal_entry_income(gen_total, gen_income, type_transaction, amount, category_income,
-                                                    description_income, date):
-
-                    display.show_info_message("Операция записана успешно")
+                    if write_operation:
+                        display.show_info_message("Операция записана успешно")
 
 
             elif type_transaction == "expense":
