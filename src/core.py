@@ -77,7 +77,8 @@ def main_loop():
 
                     income_description = True
                     while income_description:
-
+                        
+                        display.show_info_message("Введите описание доходов (не более 255 символов):")
 
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
 
