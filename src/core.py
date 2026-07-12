@@ -55,8 +55,10 @@ def main_loop():
 
                 if input_type_transaction == "income":
 
-                    income_transaction = True
-                    while income_transaction:
+                    income_amount = True
+                    while income_amount:
+
+                        display.show_info_message("Введите сумму дохода:")
 
 
 
