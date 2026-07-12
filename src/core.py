@@ -39,10 +39,9 @@ def main_loop():
             create_a_new_entry = True
             while create_a_new_entry:
 
-
-            gen_total = create_id_generator(get_last_id_from_json(t_type=None))
-            gen_income = create_id_generator(get_last_id_from_json(t_type='income'))
-            gen_expense = create_id_generator(get_last_id_from_json(t_type='expense'))
+                gen_total = su.create_id_generator(su.get_last_id_from_json(transaction_type=None))
+                gen_income = su.create_id_generator(su.get_last_id_from_json(transaction_type='income'))
+                gen_expense = su.create_id_generator(su.get_last_id_from_json(transaction_type='expense'))
 
             date = get_current_datetime()
 
