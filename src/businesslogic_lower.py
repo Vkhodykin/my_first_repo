@@ -6,42 +6,6 @@ from typing import Callable, Any, Generator
 from src import display, constants
 
 
-def get_last_id_from_json(t_type=None) -> int:
-    """
-    Находит максимальный ID в JSON файле.
-    """
-    if not os.path.exists(constants.PATH) or os.path.getsize(constants.PATH) == 0:
-        return 0
-
-    try:
-        with open(constants.PATH, 'r', encoding='utf-8') as f:
-            data = json.load(f)
-            if not data:
-                return 0
-
-            ids = []
-            for day_ops in data.values():
-                for op in day_ops:
-                    if t_type is None:
-                        val = op.get('id')
-                    elif t_type == 'income':
-                        val = op.get('id_income')
-                    elif t_type == 'expense':
-                        val = op.get('id_expense')
-                    else:
-                        val = None
-
-                    if isinstance(val, int):  # Берем только если это число
-                        ids.append(val)
-
-        return max(ids) if ids else 0
-
-    except (json.JSONDecodeError, KeyError):  # Если файл поврежден или нет ключа 'id'
-        return 0
-
-
-
-
 def validate_type_transaction(type_transaction) -> str:
 
     if type_transaction not in ['income', 'expense']:
