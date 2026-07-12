@@ -61,6 +61,8 @@ def main_loop():
                         display.show_info_message("Введите сумму дохода:")
                         input_amount = input(">> ")
 
+                        if blu.validate_amount(input_amount):
+                            break
 
 
                 category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
