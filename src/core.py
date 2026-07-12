@@ -65,6 +65,12 @@ def main_loop():
                             break
 
 
+                    income_category = True
+                    while income_category:
+
+                        
+
+
                 category_income = input("Введите категорию доходов (Regular/Random) >> ").strip().lower()
 
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
