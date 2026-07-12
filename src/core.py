@@ -85,6 +85,14 @@ def main_loop():
                             break
 
 
+                    write_operation = blu.try_add_journal_entry_income(gen_total,
+                                                                       gen_income,
+                                                                       input_type_transaction,
+                                                                       input_amount,
+                                                                       category_input,
+                                                                       description_type,
+                                                                       date)
+
                 if blu.try_add_journal_entry_income(gen_total, gen_income, type_transaction, amount, category_income,
                                                     description_income, date):
 
