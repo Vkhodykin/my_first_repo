@@ -26,6 +26,7 @@ def main_loop():
     is_working = True
     while is_working:
 
+        display.show_info_message("Введите команду")
         user_input = input(">> ")
 
         if user_input == constants.INFO_COMMAND:
