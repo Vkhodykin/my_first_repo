@@ -18,6 +18,7 @@ CAT_COMMAND = "cat"
 PERIOD_COMMAND = "period"
 STATS_COMMAND = "stats"
 EXIT_COMMAND = "exit"
+HELP_COMMAND = ["help", "?"]
 
 DATE_FMT = "%Y-%m-%d %H:%M:%S"
 
