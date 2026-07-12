@@ -49,6 +49,9 @@ def main_loop():
                 display.show_info_message("Введите тип операции (Income/Expense):")
                 input_type_transaction = input(">> ")
 
+                if not blu.validate_type_transaction(input_type_transaction):
+                    continue
+
             amount = input("Введите сумму >> ").strip()
 
 
