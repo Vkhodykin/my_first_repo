@@ -23,7 +23,8 @@ def main_loop():
     :return:
     """
 
-    while True:
+    is_working = True
+    while is_working:
 
         user_input = input(">> ")
 
