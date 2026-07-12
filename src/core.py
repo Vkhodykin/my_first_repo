@@ -105,7 +105,12 @@ def main_loop():
                         else:
                             # отменить
                             break
-                        
+
+
+                    else:
+                        display.show_error_message("Ошибка при записи операции")
+
+
 
             elif type_transaction == "expense":
 
