@@ -111,6 +111,9 @@ def main_loop():
                         display.show_error_message("Ошибка при записи операции")
                         display.show_info_message("Операция не записана")
 
+                else:
+                    display.show_info_message("Введен неверный тип операции")
+                    continue
 
 
             elif type_transaction == "expense":
