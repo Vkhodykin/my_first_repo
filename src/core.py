@@ -71,6 +71,8 @@ def main_loop():
                         display.show_info_message("Введите категорию доходов (Regular/Random):")
                         category_input = input(">> ")
 
+                        if blu.validate_category(category_input, 'income'):
+                            break
 
 
                 description_income = input("Введите описание доходов (не более 255 символов) >> ")
