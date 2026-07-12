@@ -59,7 +59,7 @@ def main_loop():
                     while income_amount:
 
                         display.show_info_message("Введите сумму дохода:")
-
+                        input_amount = input(">> ")
 
 
 
