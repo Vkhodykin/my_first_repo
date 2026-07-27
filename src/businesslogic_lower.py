@@ -18,7 +18,7 @@ def validate_type_transaction(input_type_transaction: str) -> str | bool:
     return False
 
 
-def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = False) -> bool:
+def validate_amount(input_amount, min_value = 0.01, max_value = None, allow_zero = False) -> bool | str:
     """
     Проверяет сумму, допускает не более 2 знаков после запятой
         min_value: минимальное значение (по умолчанию 0.01)
@@ -27,64 +27,71 @@ def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = Fal
     """
 
     # Проверяем формат (целые или с запятой/точкой)
-    if not amount.replace(',', '.').replace('.', '').isdigit():
+    if not isinstance(input_amount, str):
+        input_amount = str(input_amount)
 
-        display.show_error_message("Error! The amount must contain only numbers, a comma, or a period")
 
+    # Разрешаем только цифры и разделители
+    summa = input_amount.strip()
+
+    if not summa:
+        display.show_error_message("Сумма должна содержать только цифры, запятую или точку")
         return False
 
 
     # Заменяем запятую на точку
-    normalized = amount.replace(',', '.')
+    normalized = summa.replace(',', '.')
+
+    # Проверка “что похоже на число”
+    if not normalized.replace('.', '').isdigit():
+
+        display.show_error_message("Сумма должна содержать только цифры, запятую или точку")
+        return False
+
 
     # Проверяем количество знаков после запятой
     if '.' in normalized:
-
         parts = normalized.split('.')
 
-        if len(parts) > 2:
+        if len(parts) != 2:
 
-            display.show_error_message("Error! The amount can only contain one comma or period")
-
+            display.show_error_message("Сумма может содержать только одну запятую или точку.")
             return False
 
         if len(parts[1]) > 2:
 
-            display.show_error_message("Error! The amount may contain no more than 2 decimal places")
-
+            display.show_error_message("Сумма не должна содержать более 2 знаков после запятой.")
             return False
 
+
+    # Преобразовываем в float
     try:
-        amount = float(normalized)
-
-        # Проверка на ноль
-        if not allow_zero and amount == 0:
-
-            display.show_info_message("The sum cannot be equal to zero!")
-
-            return False
-
-        # Проверка минимального значения
-        if amount < min_value:
-
-            display.show_info_message(f"The amount must be no less than {min_value}!")
-
-            return False
-
-        # Проверка максимального значения
-        if max_value is not None and amount > max_value:
-
-            display.show_info_message(f"The amount should not be more than {max_value}!")
-
-            return False
-
-        # Округляем до 2 знаков для денежных сумм
-        return round(amount, 2)
+        value = float(normalized)
 
     except ValueError:
-        display.show_error_message("Error! Incorrect number format")
-
+        display.show_error_message("Сумма должна содержать только цифры, запятую или точку")
         return False
+
+
+    # Проверяем по значениям
+    if not allow_zero and value == 0:
+
+        display.show_info_message("Сумма не может быть равна нулю")
+        return False
+
+    if value < min_value:
+
+        display.show_info_message(f"Сумма должна быть не меньше {min_value}")
+        return False
+
+    if max_value is not None and value > max_value:
+
+        display.show_info_message(f"Сумма не должна превышать {max_value}")
+        return False
+
+
+    # Возвращаем значение в строку
+    return str(input_amount)
 
 
 
