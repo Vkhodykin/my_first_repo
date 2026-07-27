@@ -1,19 +1,21 @@
 import itertools
 import json
 import os
-from datetime import datetime
-from typing import Callable, Any, Generator
 from src import display, constants
 
 
-def validate_type_transaction(type_transaction) -> str:
+def validate_type_transaction(input_type_transaction: str) -> str | bool:
 
-    if type_transaction not in ['income', 'expense']:
+    normalized_type = input_type_transaction.strip().lower()
 
-        display.show_error_message("Type transaction must be Income or Expense")
-        raise ValueError("Invalid transaction type")
+    # Проверяем, есть ли тип в ключах словаря CATEGORIES
+    if normalized_type in constants.CATEGORIES:
+        return normalized_type
 
-    return type_transaction
+    # Если нет - формируем сообщение об ошибке
+    allowed_types = ", ".join(constants.CATEGORIES.keys())
+    display.show_error_message(f"Введен неверный тип операции. Допустимые типы: {allowed_types}")
+    return False
 
 
 def validate_amount(amount, min_value = 0.01, max_value = None, allow_zero = False) -> bool:
