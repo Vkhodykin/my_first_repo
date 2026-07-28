@@ -107,21 +107,26 @@ def validate_category(category_input: str, category_type: str) -> str | bool:
     return False
 
 
+def validate_description(description_type: str) -> bool | str:
 
-def validate_description(description_type: str, type_name="Text") -> bool:
+    # Проверка типа
+    if description_type is None:
+        display.show_error_message("Текст не может быть пустым")
+        return False
+
+    # Приводим к строке
+    description_type = str(description_type)
 
     # Проверка длины
     if len(description_type) > 255:
 
-        display.show_error_message(f"Error! Text too long ({len(description_type)} > 255)")
-
+        display.show_error_message(f"Текст слишком длинный ({len(description_type)} символов > 255 символов)")
         return False
 
     # Проверка на пустоту
     if not description_type.strip():
 
-        display.show_error_message(f"Error!{type_name} cannot be empty!")
-
+        display.show_error_message(f"Текст не может быть пустым")
         return False
 
     # Проверка символов
@@ -129,11 +134,10 @@ def validate_description(description_type: str, type_name="Text") -> bool:
 
         if not (char.isalpha() or char.isdigit() or char.isspace() or char in ".,-"):
 
-            display.show_error_message(f"Error! Invalid character: '{char}'")
-
+            display.show_error_message(f"Недопустимый символ: '{char}'")
             return False
 
-    return True
+    return description_type
 
 
 
