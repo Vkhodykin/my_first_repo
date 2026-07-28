@@ -94,19 +94,18 @@ def validate_amount(input_amount, min_value = 0.01, max_value = None, allow_zero
     return str(input_amount)
 
 
-
-def validate_category(category_input: str, category_type: str) -> bool:
+def validate_category(category_input: str, category_type: str) -> str | bool:
 
     allowed = constants.CATEGORIES.get(category_type, [])
 
     if category_input.strip().lower() in allowed:
-        return True
+        return category_input
 
     allowed_str = ", ".join(allowed).capitalize()
 
-    display.show_error_message(f"Error! The {category_type} category must be: {allowed_str}")
-
+    display.show_error_message(f"Введена неверная категория. Допустимые категории: {allowed_str}")
     return False
+
 
 
 def validate_description(description_type: str, type_name="Text") -> bool:
