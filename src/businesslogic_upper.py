@@ -1,6 +1,15 @@
 from src import businesslogic_lower as bll
 
 
+def validate_type_transaction(input_type_transaction: str) -> bool:
+
+    if not bll.validate_type_transaction(input_type_transaction):
+        return False
+
+    return True
+
+
+
 def try_add_journal_entry_income(create_id_generator: int, get_last_id_from_json: int, type_transaction: str, amount: str, category_income: str,
                                  description_income: str, get_current_datetime: str) -> bool:
 
