@@ -33,36 +33,33 @@ def validate_description(description_type):
     return True
 
 
+def try_add_journal_entry_income(gen_total, 
+                                 gen_income, 
+                                 input_type_transaction: str, 
+                                 input_amount: str, 
+                                 category_input: str,
+                                 description_type: str, 
+                                 date: str) -> bool:
 
-def try_add_journal_entry_income(create_id_generator: int, get_last_id_from_json: int, type_transaction: str, amount: str, category_income: str,
-                                 description_income: str, get_current_datetime: str) -> bool:
-
-    if not bll.create_id_generator():
+    if not bll.validate_type_transaction(input_type_transaction):
         return False
 
-    if not bll.get_last_id_from_json():
+    if not bll.validate_amount(input_amount):
         return False
 
-    if not bll.create_id_generator():
+    if not bll.validate_category(category_input, 'income'):
         return False
 
-    if not bll.validate_type_transaction(type_transaction):
+    if not bll.validate_description(description_type):
         return False
 
-    if not bll.validate_amount(amount):
-        return False
-
-    if not bll.validate_category_income(category_income):
-        return False
-
-    if not bll.validate_description_income(description_income):
-        return False
-
-    if not bll.get_current_datetime():
-        return False
-
-    bll.try_write_journal_entry_income(create_id_generator, get_last_id_from_json, type_transaction, amount, category_income, description_income, get_current_datetime)
-
+    bll.try_write_journal_entry_income(gen_total, 
+                                       gen_income, 
+                                       input_type_transaction, 
+                                       input_amount, 
+                                       category_input, 
+                                       description_type, 
+                                       date)
     return True
 
 
