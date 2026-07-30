@@ -17,6 +17,14 @@ def validate_amount(input_amount):
     return True
 
 
+def validate_category(category_input: str, category_type: str) -> bool:
+
+    if not bll.validate_category(category_input, category_type):
+        return False
+
+    return True
+
+
 
 def try_add_journal_entry_income(create_id_generator: int, get_last_id_from_json: int, type_transaction: str, amount: str, category_income: str,
                                  description_income: str, get_current_datetime: str) -> bool:
