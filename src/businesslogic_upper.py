@@ -93,6 +93,11 @@ def try_add_journal_entry_expense(gen_total,
     return True
 
 
+def confirm_action_input(input_confirmation: str) -> bool | None:
+    
+    return bll.confirm_action_input(input_confirmation)
+
+
 def show_entries():
     pass
 
