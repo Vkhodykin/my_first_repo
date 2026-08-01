@@ -252,3 +252,25 @@ def try_write_journal_entry_expense(gen_total,
 
         print("Ошибка записи:", error)
         return False
+
+
+def confirm_action_input(input_confirmation: str) -> bool | None:
+    """
+    Возвращает:
+          True  - если введено y/yes
+          False - если введено n/no
+          None  - если введено что-то другое
+    """
+
+    if input_confirmation is None:
+        return None
+
+    confirmation = input_confirmation.strip().lower()
+
+    if confirmation in ("y", "yes"):
+        return True
+
+    if confirmation in ("n", "no"):
+        return False
+
+    return None
