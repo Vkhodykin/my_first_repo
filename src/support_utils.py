@@ -2,6 +2,8 @@ import json
 import os
 from datetime import datetime
 from typing import Callable, Any, Generator
+from src import display, constants
+from src import businesslogic_upper as blu
 
 
 def create_id_generator(id_gen=0) -> Generator[int, Any, Any]:
@@ -68,3 +70,22 @@ def get_current_datetime() -> str:
     """
 
     return datetime.now().strftime(constants.DATE_FMT)
+
+
+def confirm(prompt: str) -> bool | None:
+    """
+    Конфирматор. Подтверждает действие пользователя.
+    """
+
+    while True:
+
+        input_confirmation = input(prompt)
+
+        response = blu.confirm_action_input(input_confirmation)
+
+        if response is None:
+
+            display.show_error_message('Некорректный ввод. Введите y/yes или n/no.')
+            continue
+
+        return response
