@@ -26,3 +26,6 @@ CATEGORIES = {
     'income': ['regular', 'random'],
     'expense': ['mandatory', 'optional', 'saving']
 }
+
+SEPARATOR = "=" * 100
+LINE_SEPARATOR = "-" * 100
